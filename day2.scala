@@ -7,7 +7,7 @@
  * Part 1: r = 2 only (n = 2k)
  * Part 2: any r >= 2
  */
-object Day02:
+object Day2:
 
   def parseRanges(s: String): Array[(BigInt, BigInt)] =
     s.split(",").map(_.split("-")).map(a => (BigInt(a(0)), BigInt(a(1))))

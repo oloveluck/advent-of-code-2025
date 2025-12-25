@@ -7,7 +7,7 @@
  * Part 1: Count positions landing on 0 after each rotation.
  * Part 2: Count every click that passes through 0.
  */
-object Day01:
+object Day1:
 
   enum Dir(val sign: Int):
     case L extends Dir(-1)

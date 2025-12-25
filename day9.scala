@@ -17,7 +17,6 @@ object Day9:
 
   case class Point(x: Long, y: Long)
 
-  // Rectangle as product of intervals (store bounds explicitly for convenience)
   case class Rect(xLo: Long, xHi: Long, yLo: Long, yHi: Long):
     def x: Interval[Long] = Interval(xLo, xHi)
     def y: Interval[Long] = Interval(yLo, yHi)
@@ -29,7 +28,6 @@ object Day9:
 
     def area: Long = (xHi - xLo + 1) * (yHi - yLo + 1)
 
-    // Open interior for strict containment checks
     def openX: Interval[Long] = Interval.open(xLo, xHi)
     def openY: Interval[Long] = Interval.open(yLo, yHi)
 
@@ -38,12 +36,10 @@ object Day9:
       Rect(math.min(a.x, b.x), math.max(a.x, b.x),
            math.min(a.y, b.y), math.max(a.y, b.y))
 
-  // Rectilinear polygon with containment predicates
   case class Polygon(vertices: Vector[Point]):
     lazy val edges: Vector[(Point, Point)] =
       vertices.indices.map(i => (vertices(i), vertices((i + 1) % vertices.length))).toVector
 
-    // Point on boundary (edge or vertex)
     private def onBoundary(p: Point): Boolean = edges.exists { case (a, b) =>
       if a.x == b.x then
         p.x == a.x && Interval(math.min(a.y, b.y), math.max(a.y, b.y)).contains(p.y)
@@ -51,7 +47,6 @@ object Day9:
         p.y == a.y && Interval(math.min(a.x, b.x), math.max(a.x, b.x)).contains(p.x)
     }
 
-    // Ray casting: count vertical edge crossings to the right
     private def rayCrossings(p: Point): Int = edges.count { case (a, b) =>
       a.x == b.x && a.x > p.x &&
         Interval.openUpper(math.min(a.y, b.y), math.max(a.y, b.y)).contains(p.y)
@@ -60,12 +55,11 @@ object Day9:
     def contains(p: Point): Boolean =
       onBoundary(p) || rayCrossings(p) % 2 == 1
 
-    // Edge cuts strictly through rectangle interior
     private def edgeCutsThrough(r: Rect): Boolean = edges.exists { case (a, b) =>
-      if a.x == b.x then // vertical edge at x = a.x
+      if a.x == b.x then
         r.openX.contains(a.x) &&
           Interval(math.min(a.y, b.y), math.max(a.y, b.y)).intersects(r.openY)
-      else // horizontal edge at y = a.y
+      else
         r.openY.contains(a.y) &&
           Interval(math.min(a.x, b.x), math.max(a.x, b.x)).intersects(r.openX)
     }
