@@ -1,3 +1,11 @@
+/**
+ * Day 12: Christmas Tree Farm
+ *
+ * Fit polyomino-shaped presents into rectangular regions.
+ * Part 1: Count regions where all required shapes can be packed.
+ * Algorithm: Backtracking search with rotation/flip variants.
+ */
+
 //> using scala 3.3
 //> using dep org.typelevel::cats-core:2.10.0
 

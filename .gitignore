@@ -1,0 +1,13 @@
+# Scala build artifacts
+.scala-build/
+.bsp/
+.bloop/
+target/
+
+# IDE
+.metals/
+.vscode/
+.idea/
+
+# OS
+.DS_Store

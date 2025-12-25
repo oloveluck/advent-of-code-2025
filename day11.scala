@@ -1,3 +1,12 @@
+/**
+ * Day 11: Reactor
+ *
+ * Count paths through a directed graph of devices.
+ * Part 1: All paths from "you" to "out".
+ * Part 2: Paths from "svr" to "out" visiting both "dac" and "fft".
+ * Algorithm: Memoized DFS with state tracking via foldMap.
+ */
+
 //> using scala 3.3
 //> using dep org.typelevel::cats-core:2.10.0
 
@@ -10,7 +19,6 @@ object Day11:
   def parse(input: String): Graph =
     input.linesIterator.map(_.split(": ")).map(a => a(0) -> a(1).split(" ").toList).toMap
 
-  // Generalized memoized path counting over state S
   def countPaths[S](graph: Graph, start: String, init: S)(
     step: (String, S) => S,
     accept: S => Boolean
