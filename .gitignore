@@ -6,7 +6,6 @@ target/
 
 # IDE
 .metals/
-.vscode/
 .idea/
 
 # OS
